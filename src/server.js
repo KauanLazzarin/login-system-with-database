@@ -5,7 +5,7 @@ const server = express();
 
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost:27017', {
+mongoose.connect('mongodb://localhost:27017/project-test', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: true

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const model = require('./../models/User.js');
 const UserModel = mongoose.model('User');
 
@@ -10,13 +11,22 @@ module.exports = {
         } catch (error) {
             throw new Error(error);
         };
-
+        
         return;
     },
-
+    
     async createUser (req, res) {
         try {
-            await UserModel.create(req.body);
+            const saltRounds = 10;
+            const hashPwd = bcrypt.hashSync(req.body.password, saltRounds);
+
+            const data = {
+                login: req.body.login,
+                email: req.body.email,
+                password: hashPwd
+            };
+
+            await UserModel.create(data);
             return res.send(req.body);
         } catch( error) {
             throw new Error(error);
