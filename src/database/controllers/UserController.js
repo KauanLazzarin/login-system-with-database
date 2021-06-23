@@ -27,8 +27,9 @@ module.exports = {
             };
 
             await UserModel.create(data);
+
             return res.send(req.body);
-        } catch( error) {
+        } catch (error) {
             throw new Error(error);
         }
     }
