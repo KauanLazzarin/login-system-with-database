@@ -39,13 +39,15 @@ module.exports = {
         
         const userData = await UserModel.findOne({login: login});
         const userHash = userData.password;
-        const pwdValidate =  bcrypt.compareSync(password, userHash);
+        const pwdValidate = bcrypt.compareSync(password, userHash);
 
 
-        if (pwdValidate) {
-            res.send('pwd is ok')
+        if (userData !== null && pwdValidate) {
+            req.session.login = true;
+
+            res.redirect('/')
         } else {
-            res.send('pwd is not ok')
+            res.session.login = false;
         };
     }
 };
