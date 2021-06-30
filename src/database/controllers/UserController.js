@@ -7,7 +7,7 @@ module.exports = {
     async getUsers (req, res) {
         try {
             const users = await UserModel.find();
-            res.send(users);
+            res.json(users);
         } catch (error) {
             throw new Error(error);
         };
