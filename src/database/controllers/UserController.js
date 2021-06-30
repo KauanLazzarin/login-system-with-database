@@ -32,5 +32,11 @@ module.exports = {
         } catch (error) {
             throw new Error(error);
         }
+    },
+
+    async loginUser (req, res) {
+        const {login, password} = req.body;
+        
+        
     }
 };
