@@ -37,6 +37,15 @@ module.exports = {
     async loginUser (req, res) {
         const {login, password} = req.body;
         
-        
+        const userData = await UserModel.findOne({login: login});
+        const userHash = userData.password;
+        const pwdValidate =  bcrypt.compareSync(password, userHash);
+
+
+        if (pwdValidate) {
+            res.send('pwd is ok')
+        } else {
+            res.send('pwd is not ok')
+        };
     }
 };
