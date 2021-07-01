@@ -41,13 +41,24 @@ module.exports = {
         const userHash = userData.password;
         const pwdValidate = bcrypt.compareSync(password, userHash);
 
-
         if (userData !== null && pwdValidate) {
             req.session.login = true;
 
-            res.redirect('/')
+            return res.json({ok: true, login: userData.login , code: 200}).status(200);
         } else {
             res.session.login = false;
+
+            return res.json({ok: false, login: null, code: 400}).status(400);
+        };
+
+    },
+
+    async getUserData (req, res) {
+        const {login} = req.params;
+        const userData = await UserModel.findOne({login: login});
+
+        if (req.session.login) {
+            return res.json(userData);
         };
     }
 };

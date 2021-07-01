@@ -21,7 +21,11 @@ console.log("\x1b[36m",'[Server]: Connected with MongoDB...');
 // server configs
 server.use(express.json());
 server.use(cors());
-server.use(session({secret: 'DM0bk5KiJg'}))
+server.use(session({
+    secret: 'DM0bk5KiJg',
+    saveUninitialized: false, 
+    resave: true
+}));
 server.use(routes);
 
 // server listening port

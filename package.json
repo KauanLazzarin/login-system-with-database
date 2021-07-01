@@ -1,7 +1,8 @@
 {
   "name": "project-backend",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "dependencies": {
