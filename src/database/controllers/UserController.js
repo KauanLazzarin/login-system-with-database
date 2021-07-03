@@ -45,7 +45,7 @@ module.exports = {
         if (userData !== null && pwdValidate) {
             req.session.login = true;
 
-            return res.json({ok: true, login: userData.login , code: 200}).status(200);
+            return res.json({ok: true, username: userData.username , code: 200}).status(200);
         } else {
             res.session.login = false;
 
