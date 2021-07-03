@@ -19,7 +19,7 @@ console.log("\x1b[36m",'[Server]: Connected with MongoDB...');
 
 
 // server configs
-server.use(cors({origin: 'http://localhost'}));
+server.use(cors());
 server.use(express.json());
 server.use(session({
     secret: 'DM0bk5KiJg',
