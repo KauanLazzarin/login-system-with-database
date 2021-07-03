@@ -22,6 +22,7 @@ module.exports = {
 
             const data = {
                 login: req.body.login,
+                username: req.body.username,
                 email: req.body.email,
                 password: hashPwd
             };
@@ -54,8 +55,8 @@ module.exports = {
     },
 
     async getUserData (req, res) {
-        const {userName} = req.params;
-        const userData = await UserModel.findOne({userName: userName});
+        const {username} = req.params;
+        const userData = await UserModel.findOne({username: username});
 
         if (req.session.login) {
             return res.json(userData);
