@@ -60,6 +60,8 @@ module.exports = {
 
         if (req.session.login) {
             return res.json(userData);
-        };
+        } else {
+            return res.json({ok: false, message: 'Please login first'});
+        }
     }
 };
