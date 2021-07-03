@@ -24,7 +24,7 @@ server.use(express.json());
 server.use(session({
     secret: 'DM0bk5KiJg',
     saveUninitialized: false, 
-    resave: true
+    resave: false
 }));
 server.use(routes);
 

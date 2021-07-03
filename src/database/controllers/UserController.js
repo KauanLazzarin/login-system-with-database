@@ -39,7 +39,7 @@ module.exports = {
         const {login, password} = req.body;
         
         const userData = await UserModel.findOne({login: login});
-        const userHash = userData.password;
+        const userHash = userData.password  ;
         const pwdValidate = bcrypt.compareSync(password, userHash);
 
         if (userData !== null && pwdValidate) {
@@ -58,10 +58,6 @@ module.exports = {
         const {username} = req.params;
         const userData = await UserModel.findOne({username: username});
 
-        if (req.session.login) {
-            return res.json(userData);
-        } else {
-            return res.json({ok: false, message: 'Please login first'});
-        }
+        return res.json(userData);
     }
 };
