@@ -23,8 +23,9 @@ server.use(cors());
 server.use(express.json());
 server.use(session({
     secret: 'DM0bk5KiJg',
-    saveUninitialized: false, 
-    resave: false
+    saveUninitialized: true, 
+    resave: true,
+    cookie: {secure: true}
 }));
 server.use(routes);
 

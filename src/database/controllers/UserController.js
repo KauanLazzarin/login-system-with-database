@@ -4,6 +4,8 @@ const model = require('./../models/User.js');
 const UserModel = mongoose.model('User');
 
 module.exports = {
+    isLogged: false, 
+
     async getUsers (req, res) {
         try {
             const users = await UserModel.find();
@@ -42,13 +44,11 @@ module.exports = {
         const userHash = userData.password  ;
         const pwdValidate = bcrypt.compareSync(password, userHash);
 
-        if (userData !== null && pwdValidate) {
-            req.session.login = true;
+        if (pwdValidate) {
+            this.isLogged = true;
 
             return res.json({ok: true, username: userData.username , code: 200}).status(200);
         } else {
-            res.session.login = false;
-
             return res.json({ok: false, login: null, code: 400}).status(400);
         };
 
@@ -58,6 +58,10 @@ module.exports = {
         const {username} = req.params;
         const userData = await UserModel.findOne({username: username});
 
-        return res.json(userData);
+        if (isLogged) {
+            return res.json(userData);
+        } else {
+            return res.send('not worked');
+        }
     }
 };
