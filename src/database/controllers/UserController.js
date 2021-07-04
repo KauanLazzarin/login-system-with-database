@@ -5,6 +5,7 @@ const UserModel = mongoose.model('User');
 
 module.exports = {
     isLogged: false, 
+    currentLogged: '',
 
     async getUsers (req, res) {
         try {
@@ -21,7 +22,7 @@ module.exports = {
         try {
             const saltRounds = 10;
             const hashPwd = bcrypt.hashSync(req.body.password, saltRounds);
-
+            
             const data = {
                 login: req.body.login,
                 username: req.body.username,
@@ -46,6 +47,7 @@ module.exports = {
 
         if (pwdValidate) {
             this.isLogged = true;
+            this.currentLogged = userData.username;
 
             return res.json({ok: true, username: userData.username , code: 200}).status(200);
         } else {
@@ -58,10 +60,21 @@ module.exports = {
         const {username} = req.params;
         const userData = await UserModel.findOne({username: username});
 
-        if (isLogged) {
-            return res.json(userData);
+        const dataToSend = {
+            username: userData.username,
+        };
+        
+        const currentLoggedData = {
+            username: userData.username, 
+            isLogged: true
+        };
+
+        if (this.isLogged && this.currentLogged === username) {
+            return res.json(currentLoggedData);
+        } else if (this.isLogged) {
+            return res.json(dataToSend);
         } else {
-            return res.send('not worked');
+            return res.json({ok: false, message: 'Please login first'});
         }
     }
 };

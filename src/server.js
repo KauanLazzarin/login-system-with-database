@@ -23,11 +23,12 @@ server.use(cors());
 server.use(express.json());
 server.use(session({
     secret: 'DM0bk5KiJg',
-    saveUninitialized: true, 
-    resave: true,
-    cookie: {secure: true}
+    saveUninitialized: false, 
+    resave: false, 
+    cookie: {secure: false}
 }));
 server.use(routes);
+
 
 // server listening port
 server.listen(process.env.PORT, () => console.log(`[Server]: Running on port ${process.env.PORT}...`));
