@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const model = require('./../models/User.js');
+const modelUser = require('./../models/User.js');
+const modelPosts = require('./../models/Posts.js');
+const PostsController = require('./PostsController.js');
 const UserModel = mongoose.model('User');
+const PostsModel = mongoose.model('Posts');
 
 module.exports = {
     isLogged: false, 
@@ -30,7 +33,12 @@ module.exports = {
                 password: hashPwd
             };
 
+            const postDBData = {
+                username: req.body.username
+            };
+
             await UserModel.create(data);
+            await PostsModel.create(postDBData);
 
             return res.send(req.body);
         } catch (error) {
@@ -47,6 +55,7 @@ module.exports = {
 
         if (pwdValidate) {
             this.isLogged = true;
+            PostsController.isLogged = true;
             this.currentLogged = userData.username;
 
             return res.json({ok: true, username: userData.username , code: 200}).status(200);
@@ -62,16 +71,10 @@ module.exports = {
 
         const dataToSend = {
             username: userData.username,
-        };
-        
-        const currentLoggedData = {
-            username: userData.username, 
-            isLogged: true
+            isLoggedUserData: this.currentLogged === username ? true : false
         };
 
-        if (this.isLogged && this.currentLogged === username) {
-            return res.json(currentLoggedData);
-        } else if (this.isLogged) {
+        if (this.isLogged) {
             return res.json(dataToSend);
         } else {
             return res.json({ok: false, message: 'Please login first'});
