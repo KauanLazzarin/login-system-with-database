@@ -10,10 +10,13 @@ router.get('/', UserControllers.getUsers);
 router.get('/user/:username', UserControllers.getUserData);
 
 // get user posts by username
-router.get('/user/posts/:username', PostsController.getPosts);
+router.get('/user/:username/posts', PostsController.getPosts);
 
 // create user 
 router.post('/create-user', UserControllers.createUser);
+
+// create post 
+router.post('/user/:username/posts/create', PostsController.createPost);
 
 // login 
 router.post('/login', UserControllers.loginUser);
