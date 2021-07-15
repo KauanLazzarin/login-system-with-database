@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const parser = multer({dest: 'public/uploads'});
 const modelUser = require('./../models/User.js');
 const modelPosts = require('./../models/Posts.js');
 const PostsController = require('./PostsController.js');
+const { parse } = require('dotenv');
 const UserModel = mongoose.model('User');
 const PostsModel = mongoose.model('Posts');
 

@@ -23,6 +23,7 @@ console.log("\x1b[36m",'[Server]: Connected with MongoDB...');
 server.use(cors());
 server.use(express.json());
 server.use(bp.urlencoded({extended: true}));
+server.use(express.static('public'));
 server.use(session({
     secret: 'DM0bk5KiJg',
     saveUninitialized: false, 
